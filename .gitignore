@@ -1,0 +1,24 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Virtual envs
+.venv/
+env/
+venv/
+
+# Secrets
+.env
+
+# OS / Editor files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
