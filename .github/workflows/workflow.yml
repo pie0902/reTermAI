@@ -3,7 +3,7 @@ name: Publish Python 🐍 package to PyPI
 on:
   push:
     tags:
-      - "v*"
+      - "v*" # "v1.0.0", "v1.1.0" 같은 태그가 푸시될 때 실행
 
 permissions:
   id-token: write
@@ -33,3 +33,6 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: ${{ secrets.PYPI_USERNAME }}
+          password: ${{ secrets.PYPI_PASSWORD }}
