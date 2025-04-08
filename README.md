@@ -1,3 +1,14 @@
+```
+ ___   ___   _____   ___   ___   __ __    __    _
+| _ \ | __| |_   _| | __| | _ \ |  V  |  /  \  | |
+| v / | _|    | |   | _|  | v / | \_/ | | /\ | | |
+|_|_\ |___|   |_|   |___| |_|_\ |_| |_| |_||_| |_|
+
+[reTermAI] Smart command assistant for your terminal 🧠💻
+```
+
+---
+
 # reTermAI
 
 💡 A terminal command recommender powered by AI and your own shell history.
@@ -32,7 +43,7 @@ pip install -e .
 
 ## ⚙️ Usage
 
-### Suggest AI-powered command recommendations:
+### 🔮 AI-powered command suggestions:
 
 ```bash
 reterm suggest
@@ -40,12 +51,22 @@ reterm suggest
 
 Options:
 
-- `--limit, -l` — number of recent commands to analyze (default: 200)
-- `--provider, -p` — choose from `"openai"` or `"gemini"`
+| Option                 | Description                                          |
+| ---------------------- | ---------------------------------------------------- |
+| `--history-limit, -hl` | Number of recent commands to read (default: 300)     |
+| `--context-limit, -cl` | How many commands to feed into the LLM (default: 20) |
+| `--provider, -p`       | LLM to use (`openai` or `gemini`)                    |
+
+Examples:
+
+```bash
+reterm suggest -p gemini
+reterm suggest --history-limit 500 --context-limit 30
+```
 
 ---
 
-### Match commands by keyword:
+### 🔎 Match past commands by keyword:
 
 ```bash
 reterm match docker
@@ -53,20 +74,27 @@ reterm match docker
 
 Options:
 
-- `--limit, -l` — max results to display (default: 5)
+| Option        | Description                                         |
+| ------------- | --------------------------------------------------- |
+| `--limit, -l` | Max number of matching results to show (default: 5) |
 
 ---
 
 ## 🔐 Configuration
 
-Create a `.env` file in your project or home directory:
+Add a `.env` file in your home or project directory:
 
 ```env
 OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxx
 GOOGLE_API_KEY=your-gemini-api-key
 ```
 
-A `.env.example` is also included for reference.
+| Key              | Used for                              |
+| ---------------- | ------------------------------------- |
+| `OPENAI_API_KEY` | Required if using `--provider openai` |
+| `GOOGLE_API_KEY` | Required if using `--provider gemini` |
+
+You can also refer to the included `.env.example`.
 
 ---
 
@@ -78,6 +106,7 @@ reterm/
 ├── llm.py          # LLM integration (OpenAI, Gemini)
 ├── shell.py        # Shell history detection and parsing
 ├── config.py       # API key loader
+├── welcome.py      # ASCII and help panel
 ```
 
 ---
@@ -90,7 +119,11 @@ We welcome contributions! Fork the repo, create a feature branch, and open a pul
 git checkout -b feat/your-feature
 ```
 
-Feel free to open issues or suggest enhancements!
+Optional ideas:
+
+- Add support for `fish` shell
+- Add model options (e.g. `gpt-4o`, `gemini-pro`)
+- Improve LLM prompt formatting
 
 ---
 

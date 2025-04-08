@@ -6,13 +6,14 @@ on:
       - "v*" # "v1.0.0", "v1.1.0" 같은 태그가 푸시될 때 실행
 
 permissions:
-  id-token: write
+  id-token: write # Trusted Publishing을 위한 필수 권한
   contents: read
 
 jobs:
   publish-to-pypi:
     name: Upload release to PyPI
     runs-on: ubuntu-latest
+    environment: pypi # 선택 사항: GitHub 환경 설정
 
     steps:
       - name: Checkout code
@@ -34,5 +35,4 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: ${{ secrets.PYPI_USERNAME }}
-          password: ${{ secrets.PYPI_PASSWORD }}
+          repository-url: https://pypi.org/legacy/ # 기본 PyPI 저장소 URL
