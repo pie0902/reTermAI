@@ -8,6 +8,8 @@
 ```
 
 ---
+![Image](https://github.com/user-attachments/assets/0de4a2b5-2167-4fe0-bc6c-764cc76ff435)
+
 
 # reTermAI
 
