@@ -23,32 +23,19 @@ app = typer.Typer(
 
 CONFIG_PATH = os.path.expanduser("~/.reterm_config")
 
-@app.callback()
-def main_callback(
-    show_welcome: bool = typer.Option(
-        False,
-        "--welcome",
-        help="Show the welcome banner manually."
-    )
-):
-    """
-    Main callback: controls when welcome message shows.
-    """
-    if show_welcome or not os.path.exists(CONFIG_PATH):
+# 웰컴 메시지 초기 실행 로직을 별도 함수로 분리
+def check_and_show_welcome():
+    """최초 실행 시 웰컴 메시지를 보여주고 설정 파일을 생성."""
+    if not os.path.exists(CONFIG_PATH):
         print_welcome()
-        # 첫 실행이라면 config 파일 생성
-        if not os.path.exists(CONFIG_PATH):
-            with open(CONFIG_PATH, "w") as f:
-                f.write("welcome_shown=true\n")
+        with open(CONFIG_PATH, "w") as f:
+            f.write("welcome_shown=true\n")
 
 @app.command("welcome")
 def show_welcome():
-    """
-    Show the welcome banner manually.
-    """
+    """Show the welcome banner manually."""
     print_welcome()
 
-                
 @app.command()
 def suggest(
     history_limit: int = typer.Option(
@@ -73,9 +60,8 @@ def suggest(
         help="LLM provider to use (e.g., 'openai', 'gemini')."
     )
 ):
-    """
-    Analyze your shell history and get AI-based command suggestions.
-    """
+    """Analyze your shell history and get AI-based command suggestions."""
+    check_and_show_welcome()  # 모든 명령어 실행 전 웰컴 확인
     try:
         api_key = load_api_key(provider)
         if not api_key:
@@ -89,13 +75,11 @@ def suggest(
             typer.echo("✅ No command history found.", err=True)
             raise Exit(code=0)
 
-        # 👉 여기서 context_limit만큼만 슬라이스
         history_for_llm = full_history[-context_limit:]
         llm = get_llm(provider, api_key)
 
         typer.echo(f"⏳ Analyzing {len(history_for_llm)} commands using {provider}...", err=True)
         suggestions = llm.suggest(history_for_llm)
-
 
         filtered_suggestions = []
         if suggestions:
@@ -163,11 +147,10 @@ def match(
     query: str = typer.Argument(..., help="Keyword or partial command to search in history."),
     limit: int = typer.Option(5, "--limit", "-l", help="Maximum number of matching commands to display.")
 ):
-    """
-    Search your full command history for matches to the given keyword or phrase.
-    """
+    """Search your full command history for matches to the given keyword or phrase."""
+    check_and_show_welcome()  # 모든 명령어 실행 전 웰컴 확인
     try:
-        history = get_recent_history(limit=None)  # ✅ Read full history now
+        history = get_recent_history(limit=None)
         matches = [cmd for cmd in history if query.lower() in cmd.lower()]
 
         if not matches:
@@ -198,5 +181,6 @@ def match(
     except Exception as e:
         typer.echo(f"❌ Error: {e}", err=True)
         raise Exit(code=1)
+
 if __name__ == "__main__":
     app()
