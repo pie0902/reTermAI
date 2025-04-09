@@ -15,7 +15,9 @@
 
 💡 A terminal command recommender powered by AI and your own shell history.
 
----
+## Demo GIF
+
+## ![demo](docs/demo.gif)
 
 ## ✨ Features
 
