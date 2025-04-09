@@ -8,8 +8,8 @@
 ```
 
 ---
-![Image](https://github.com/user-attachments/assets/0de4a2b5-2167-4fe0-bc6c-764cc76ff435)
 
+![Image](https://github.com/user-attachments/assets/0de4a2b5-2167-4fe0-bc6c-764cc76ff435)
 
 # reTermAI
 
@@ -63,7 +63,23 @@ Examples:
 
 ```bash
 reterm suggest -p gemini
+
 reterm suggest --history-limit 500 --context-limit 30
+# Basic suggestion
+reterm suggest
+
+# Suggest using Gemini and 50 recent commands
+reterm suggest -hl 50 -p gemini
+
+# Suggest using OpenAI and 30 context commands
+reterm suggest --provider openai --context-limit 30
+
+# Search for past docker commands
+reterm match docker
+
+# Show up to 10 matching commands
+reterm match docker -l 10
+
 ```
 
 ---
