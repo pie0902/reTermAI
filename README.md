@@ -9,6 +9,14 @@
 
 ---
 
+## 📄 Project Website
+
+Looking for a better overview or prettier version of this README?  
+👉 Check out the reTermAI landing page:  
+[https://pie0902.github.io/reterm-site](https://pie0902.github.io/reterm-site)
+
+---
+
 ![Image](https://github.com/user-attachments/assets/0de4a2b5-2167-4fe0-bc6c-764cc76ff435)
 
 # reTermAI
